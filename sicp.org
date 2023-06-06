@@ -1,0 +1,169 @@
+#+title: Structure and Interpretation of Computer Programs
+#+subtitle: Exercise solutions
+#+author: Konstantinos Chousos
+#+language: en
+#+options: num:nil toc:nil date:t timestamp:nil # tex:dvisvgm
+#+property: header-args :lang sicp :eval no-export :exports both :tangle ./sicp.rkt :comments link
+:LATEX_PROPERTIES:
+#+LATEX_COMPILER: lualatex
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper, titlepage, twoside]
+
+#+LATEX_HEADER: \pagestyle{headings}
+
+# #+LATEX_HEADER: \usepackage{polyglossia}
+# #+LATEX_HEADER: \setmainlanguage{greek}
+# #+LATEX_HEADER: \setotherlanguage{English}
+
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER: \setmainfont{Linux Libertine}
+#+LATEX_HEADER: \setmonofont{Iosevka}
+
+#+LATEX_HEADER: \usepackage{microtype}
+
+#+LATEX_HEADER: \usepackage{svg}
+
+#+LATEX_HEADER: \usepackage[margin=1.3in]{geometry}
+
+#+LATEX_HEADER: \renewcommand{\baselinestretch}{1.2}
+
+#+LATEX_HEADER: \usepackage[font={small}, labelfont={bf}]{caption}
+
+#+LATEX_HEADER: \usepackage{minted}
+# #+LATEX_HEADER: \usemintedstyle{vs}
+#+LATEX_HEADER: \setminted{frame=single, framesep=2mm, linenos=true}
+
+# #+LATEX_HEADER: \usepackage{titlesec}
+# #+LATEX_HEADER: \titleformat{\section}{\large \center \bf \uppercase}{\thesection}{0.5em}{}{}
+
+# For =#+results= styling
+#+LATEX_HEADER: \RequirePackage{fancyvrb}
+#+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{frame=single, label=Results, vspace=5mm}
+
+# Italicize all quotes
+#+LATEX_HEADER: \usepackage{etoolbox}
+#+LATEX_HEADER: \AtBeginEnvironment{quote}{\itshape}
+:END:
+
+* Introduction
+
+This document contains my solutions to the exercises of the /Abelson, Sussman & Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press/ book. It will be updated to reflect my current progress.
+
+Instead of reading from the PDF, I study SICP through its TeXInfo format[fn::https://www.neilvandyke.org/sicp-texi/]. This way, I read the material, interact with the REPL[fn::see "Read-Eval-Print-Loop"] and take notes all from my editor of choice, Emacs.
+
+This document is written in Org-Mode. The code blocks are evaluated using Org-Babel, which is also used to /tangle/ the resulting [[./sicp.rkt][sicp.rkt]] file and /weave/ this very PDF, as in literate programming parlance.
+
+Racket is used for implementing the exercises, using the =sicp= package[fn::https://docs.racket-lang.org/sicp-manual/index.html]. Other possible options are guile and MIT-scheme.
+
+# #+TOC: headlines 2
+
+#+latex: \newpage
+
+* Chapter 1
+
+** 1.1
+
+#+begin_quote
+Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
+#+end_quote
+
+The interpreter's expected results are in the comments under each expression.
+
+#+begin_src racket
+10
+;; 10
+(+ 5 3 4)
+;; 12
+(- 9 1)
+;; 8
+(/ 6 2)
+;; 3
+(+ (* 2 4) (- 4 6))
+;; 6
+(define a 3)
+;;
+(define b (+ a 1))
+;;
+(+ a b (* a b))
+;; 19
+(= a b)
+;; #f
+(if (and (> b a) (< b (* a b)))
+    b
+    a)
+;; 4
+(cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (else 25))
+;; 16
+(+ 2 (if (> b a) b a))
+;; 6
+(* (cond ((> a b) a)
+         ((< a b) b)
+         (else -1))
+   (+ a 1))
+;; 16
+#+end_src
+
+** 1.2
+
+#+begin_quote
+Translate the following expression into prefix form.
+
+\begin{equation}
+\label{eq:1}
+\frac{5+4+(2 - (3 - (6 + 4/5)))}{3(6-2)(2-7)}
+\end{equation}
+#+end_quote
+
+#+begin_src racket
+(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
+   (* 3 (- 6 2) (- 2 7)))
+#+end_src
+
+#+RESULTS:
+: -37/150
+
+** 1.3
+
+#+begin_quote
+Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
+#+end_quote
+
+Instead of searching for the two larger numbers, we just find the smallest. This way, we don't need to think about duplicate cases etc.
+
+#+caption: Sum of the two-out-of-three larger numbers
+#+name: larger-squares
+#+begin_src racket
+(define (proc a b c)
+  (cond ((and (> a c) (> b c))
+         (+ (* a a) (* b b)))
+        ((and (> a b) (> c b))
+         (+ (* a a) (* c c)))
+        ((and (> b a) (> c a))
+         (+ (* b b) (* c c)))))
+#+end_src
+
+#+caption: Testing the previous procedure
+#+attr_latex: :placement [H]
+#+begin_src racket :noweb eval
+<<larger-squares>>
+(proc 4 2 3)
+#+end_src
+
+#+RESULTS:
+: 25
+
+** 1.4
+
+#+begin_quote
+Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
+
+#+begin_src racket
+(define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b))
+#+end_src
+#+end_quote
+
+The operator to be used depends on the evaluation of the =if= statement.
+

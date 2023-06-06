@@ -1,0 +1,188 @@
+% Intended LaTeX compiler: lualatex
+\documentclass[a4paper, titlepage, twoside]{article}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\pagestyle{headings}
+\usepackage{fontspec}
+\setmainfont{Linux Libertine}
+\setmonofont{Iosevka}
+\usepackage{microtype}
+\usepackage{svg}
+\usepackage[margin=1.3in]{geometry}
+\renewcommand{\baselinestretch}{1.2}
+\usepackage[font={small}, labelfont={bf}]{caption}
+\usepackage{minted}
+\setminted{frame=single, framesep=2mm, linenos=true}
+\RequirePackage{fancyvrb}
+\DefineVerbatimEnvironment{verbatim}{Verbatim}{frame=single, label=Results, vspace=5mm}
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\itshape}
+
+%% ox-latex features:
+%   !announce-start, !guess-pollyglossia, !guess-babel, !guess-inputenc,
+%   caption, maths, !announce-end.
+
+\usepackage{capt-of}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%% end ox-latex features
+
+
+\author{Konstantinos Chousos}
+\date{\today}
+\title{Structure and Interpretation of Computer Programs\\\medskip
+\large Exercise solutions}
+\hypersetup{
+pdfauthor={Konstantinos Chousos},
+pdftitle={Structure and Interpretation of Computer Programs},
+pdfkeywords={},
+pdfsubject={},
+pdfcreator={Emacs 29.0.91 (Org mode 9.7-pre)},
+pdflang={English},
+colorlinks,
+linkcolor=blue,
+citecolor=red,
+urlcolor=blue}\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+\label{sec:orga8a4e1d}
+
+This document contains my solutions to the exercises of the \emph{Abelson, Sussman \& Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press} book. It will be updated to reflect my current progress.
+
+Instead of reading from the PDF, I study SICP through its TeXInfo format\footnote{\url{https://www.neilvandyke.org/sicp-texi/}}. This way, I read the material, interact with the REPL\footnote{see ``Read-Eval-Print-Loop''} and take notes all from my editor of choice, Emacs.
+
+This document is written in Org-Mode. The code blocks are evaluated using Org-Babel, which is also used to \emph{tangle} the resulting \href{./sicp.rkt}{sicp.rkt} file and \emph{weave} this very PDF, as in literate programming parlance.
+
+Racket is used for implementing the exercises, using the \texttt{sicp} package\footnote{\url{https://docs.racket-lang.org/sicp-manual/index.html}}. Other possible options are guile and MIT-scheme.
+
+\newpage
+
+\section*{Chapter 1}
+\label{sec:orgf9e1548}
+
+\subsection*{1.1}
+\label{sec:orgf510660}
+
+\begin{quote}
+Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
+\end{quote}
+
+The interpreter's expected results are in the comments under each expression.
+
+\begin{minted}[]{racket}
+10
+;; 10
+(+ 5 3 4)
+;; 12
+(- 9 1)
+;; 8
+(/ 6 2)
+;; 3
+(+ (* 2 4) (- 4 6))
+;; 6
+(define a 3)
+;;
+(define b (+ a 1))
+;;
+(+ a b (* a b))
+;; 19
+(= a b)
+;; #f
+(if (and (> b a) (< b (* a b)))
+    b
+    a)
+;; 4
+(cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (else 25))
+;; 16
+(+ 2 (if (> b a) b a))
+;; 6
+(* (cond ((> a b) a)
+         ((< a b) b)
+         (else -1))
+   (+ a 1))
+;; 16
+\end{minted}
+
+\subsection*{1.2}
+\label{sec:orga759c6d}
+
+\begin{quote}
+Translate the following expression into prefix form.
+
+\begin{equation}
+\label{eq:1}
+\frac{5+4+(2 - (3 - (6 + 4/5)))}{3(6-2)(2-7)}
+\end{equation}
+\end{quote}
+
+\begin{minted}[]{racket}
+(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
+   (* 3 (- 6 2) (- 2 7)))
+\end{minted}
+
+\begin{verbatim}
+-37/150
+\end{verbatim}
+
+\subsection*{1.3}
+\label{sec:orgb64a452}
+
+\begin{quote}
+Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
+\end{quote}
+
+Instead of searching for the two larger numbers, we just find the smallest. This way, we don't need to think about duplicate cases etc.
+
+\begin{listing}[htbp]
+\begin{minted}[]{racket}
+(define (proc a b c)
+  (cond ((and (> a c) (> b c))
+         (+ (* a a) (* b b)))
+        ((and (> a b) (> c b))
+         (+ (* a a) (* c c)))
+        ((and (> b a) (> c a))
+         (+ (* b b) (* c c)))))
+\end{minted}
+\caption{\label{lst:orga504e12}Sum of the two-out-of-three larger numbers}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}[]{racket}
+<<larger-squares>>
+(proc 4 2 3)
+\end{minted}
+\caption{Testing the previous procedure}
+\end{listing}
+
+\begin{verbatim}
+25
+\end{verbatim}
+
+\subsection*{1.4}
+\label{sec:org8511655}
+
+\begin{quote}
+Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
+
+\begin{minted}[]{racket}
+(define (a-plus-abs-b a b)
+  ((if (> b 0) + -) a b))
+\end{minted}
+\end{quote}
+
+The operator to be used depends on the evaluation of the \texttt{if} statement.
+\end{document}
