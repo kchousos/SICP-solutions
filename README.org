@@ -1,0 +1,7 @@
+#+title: /Structure and Interpretation of Computer Programs/: My solutions
+#+options: num:t toc:nil date:nil timestamp:nil
+
+#+attr_org: :width 300px
+[[file:img.jpg]]
+
+This repo contains my solutions to the exercises of the /Abelson, Sussman & Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press/ book. [[file:sicp.org]] is the main file. The PDF and the racket source are derived from it. The solutions are written in the style of literate programming, leveraging noweb syntax where is needed.
