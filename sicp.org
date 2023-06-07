@@ -30,7 +30,7 @@
 #+LATEX_HEADER: \usepackage[font={small}, labelfont={bf}]{caption}
 
 #+LATEX_HEADER: \usepackage{minted}
-# #+LATEX_HEADER: \usemintedstyle{vs}
+#+LATEX_HEADER: \usemintedstyle{friendly}
 #+LATEX_HEADER: \setminted{frame=single, framesep=2mm, linenos=true}
 
 # #+LATEX_HEADER: \usepackage{titlesec}
@@ -166,4 +166,27 @@ Observe that our model of evaluation allows for combinations whose operators are
 #+end_quote
 
 The operator to be used depends on the evaluation of the =if= statement.
+
+** 1.5
+
+#+begin_quote
+Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation.  He defines the following two procedures:
+
+#+begin_src racket
+(define (p) (p))
+
+(define (test x y)
+  (if (= x 0)
+      0
+      y))
+#+end_src
+
+Then he evaluates the expression
+
+#+begin_src racket
+(test 0 (p))
+#+end_src
+
+What behavior will Ben observe with an interpreter that uses applicative-order evaluation?  What behavior will he observe with an interpreter that uses normal-order evaluation?  Explain your answer.  (Assume that the evaluation rule for the special form `if' is the same whether the interpreter is using normal or applicative order: The predicate expression is evaluated first, and the result determines whether to evaluate the consequent or the alternative expression.)
+#+end_quote
 

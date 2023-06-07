@@ -20,6 +20,7 @@
 \renewcommand{\baselinestretch}{1.2}
 \usepackage[font={small}, labelfont={bf}]{caption}
 \usepackage{minted}
+\usemintedstyle{friendly}
 \setminted{frame=single, framesep=2mm, linenos=true}
 \RequirePackage{fancyvrb}
 \DefineVerbatimEnvironment{verbatim}{Verbatim}{frame=single, label=Results, vspace=5mm}
@@ -57,7 +58,7 @@ urlcolor=blue}\begin{document}
 \maketitle
 
 \section*{Introduction}
-\label{sec:orga8a4e1d}
+\label{sec:org029c3b3}
 
 This document contains my solutions to the exercises of the \emph{Abelson, Sussman \& Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press} book. It will be updated to reflect my current progress.
 
@@ -70,10 +71,10 @@ Racket is used for implementing the exercises, using the \texttt{sicp} package\f
 \newpage
 
 \section*{Chapter 1}
-\label{sec:orgf9e1548}
+\label{sec:org1dbbfdb}
 
 \subsection*{1.1}
-\label{sec:orgf510660}
+\label{sec:orga4f23b2}
 
 \begin{quote}
 Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
@@ -118,7 +119,7 @@ The interpreter's expected results are in the comments under each expression.
 \end{minted}
 
 \subsection*{1.2}
-\label{sec:orga759c6d}
+\label{sec:org99c70ff}
 
 \begin{quote}
 Translate the following expression into prefix form.
@@ -139,7 +140,7 @@ Translate the following expression into prefix form.
 \end{verbatim}
 
 \subsection*{1.3}
-\label{sec:orgb64a452}
+\label{sec:org96afb7c}
 
 \begin{quote}
 Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
@@ -157,7 +158,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
         ((and (> b a) (> c a))
          (+ (* b b) (* c c)))))
 \end{minted}
-\caption{\label{lst:orga504e12}Sum of the two-out-of-three larger numbers}
+\caption{\label{lst:org375c71f}Sum of the two-out-of-three larger numbers}
 \end{listing}
 
 \begin{listing}[H]
@@ -173,7 +174,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
 \end{verbatim}
 
 \subsection*{1.4}
-\label{sec:org8511655}
+\label{sec:org1555229}
 
 \begin{quote}
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
