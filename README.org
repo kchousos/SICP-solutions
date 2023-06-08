@@ -4,3 +4,5 @@
 #+HTML: <img src="./img.jpg" align="left" width="200">
 
 This repo contains my solutions to the exercises of the /Abelson, Sussman & Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press/ book. [[file:sicp.org]] is the main file. The PDF and the racket source are derived from it. The solutions are written in the style of literate programming, leveraging noweb syntax where is needed.
+
+For more info on my general workflow surrounding SICP, you can read this [[https://kchousos.github.io/posts/sicp-in-emacs/][accompanying blog post]] on my site.
