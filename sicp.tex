@@ -41,11 +41,11 @@
 
 \author{Konstantinos Chousos}
 \date{\today}
-\title{Structure and Interpretation of Computer Programs\\\medskip
+\title{\textbf{Structure and Interpretation of Computer Programs}\\\medskip
 \large Exercise solutions}
 \hypersetup{
 pdfauthor={Konstantinos Chousos},
-pdftitle={Structure and Interpretation of Computer Programs},
+pdftitle={\textbf{Structure and Interpretation of Computer Programs}},
 pdfkeywords={},
 pdfsubject={},
 pdfcreator={Emacs 29.0.91 (Org mode 9.7-pre)},
@@ -58,7 +58,7 @@ urlcolor=blue}\begin{document}
 \maketitle
 
 \section*{Introduction}
-\label{sec:org9736a7b}
+\label{sec:org4098251}
 
 This document contains my solutions to the exercises of the \emph{Abelson, Sussman \& Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press} book. It will be updated to reflect my current progress. Each subsection consists of an exercise. The exercise is copied over from the book and presented in italics, followed by my (hopefully correct) solution.
 
@@ -71,10 +71,10 @@ Racket is used for implementing the exercises, using the \texttt{sicp} package\f
 \newpage
 
 \section*{Chapter 1}
-\label{sec:org7a417c8}
+\label{sec:org1962e20}
 
 \subsection*{1.01}
-\label{sec:orgd41ac1c}
+\label{sec:org040de82}
 
 \begin{quote}
 Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
@@ -119,7 +119,7 @@ The interpreter's expected results are in the comments under each expression.
 \end{minted}
 
 \subsection*{1.02}
-\label{sec:orgdb42b30}
+\label{sec:org27b456e}
 
 \begin{quote}
 Translate the following expression into prefix form.
@@ -140,7 +140,7 @@ Translate the following expression into prefix form.
 \end{verbatim}
 
 \subsection*{1.03}
-\label{sec:org85802f0}
+\label{sec:orgb61256e}
 
 \begin{quote}
 Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
@@ -158,7 +158,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
         ((and (> b a) (> c a))
          (+ (* b b) (* c c)))))
 \end{minted}
-\caption{\label{lst:org557cc26}Sum of the two-out-of-three larger numbers}
+\caption{\label{lst:org7a66e28}Sum of the two-out-of-three larger numbers}
 \end{listing}
 
 \begin{listing}[H]
@@ -174,7 +174,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
 \end{verbatim}
 
 \subsection*{1.04}
-\label{sec:org2e35b65}
+\label{sec:org0e5c146}
 
 \begin{quote}
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
@@ -188,7 +188,7 @@ Observe that our model of evaluation allows for combinations whose operators are
 The operator to be used depends on the evaluation of the \texttt{if} statement.
 
 \subsection*{1.05}
-\label{sec:org8eec7eb}
+\label{sec:org7025c05}
 
 \begin{quote}
 Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation.  He defines the following two procedures:

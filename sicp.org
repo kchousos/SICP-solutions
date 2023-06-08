@@ -1,4 +1,4 @@
-#+title: Structure and Interpretation of Computer Programs
+#+title: *Structure and Interpretation of Computer Programs*
 #+subtitle: Exercise solutions
 #+author: Konstantinos Chousos
 #+language: en
