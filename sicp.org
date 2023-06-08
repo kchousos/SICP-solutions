@@ -47,13 +47,15 @@
 
 * Introduction
 
-This document contains my solutions to the exercises of the /Abelson, Sussman & Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press/ book. It will be updated to reflect my current progress.
+This document contains my solutions to the exercises of the /Abelson, Sussman & Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press/ book. It will be updated to reflect my current progress. Each subsection consists of an exercise. The exercise is copied over from the book and presented in italics, followed by my (hopefully correct) solution.
 
-Instead of reading from the PDF, I study SICP through its TeXInfo format[fn::https://www.neilvandyke.org/sicp-texi/]. This way, I read the material, interact with the REPL[fn::see "Read-Eval-Print-Loop"] and take notes all from my editor of choice, Emacs.
+Instead of reading from the PDF, I study SICP through its TeXInfo format[fn::https://www.neilvandyke.org/sicp-texi/]. This way, I read the material, interact with the REPL[fn::see "Read-Eval-Print-Loop"] and take notes all from my editor of choice, Emacs. For more details about my workflow, you can read my accompanying blog post[fn::https://kchousos.github.io/posts/sicp-in-emacs/].
 
 This document is written in Org-Mode. The code blocks are evaluated using Org-Babel, which is also used to /tangle/ the resulting [[./sicp.rkt][sicp.rkt]] file and /weave/ this very PDF, as in literate programming parlance.
 
-Racket is used for implementing the exercises, using the =sicp= package[fn::https://docs.racket-lang.org/sicp-manual/index.html]. Other possible options are guile and MIT-scheme.
+Racket is used for implementing the exercises, using the =sicp= package[fn::https://docs.racket-lang.org/sicp-manual/index.html]. Other possible options are guile and GNU/MIT-scheme.
+
+* newpage :ignore:
 
 # #+TOC: headlines 2
 
@@ -61,7 +63,7 @@ Racket is used for implementing the exercises, using the =sicp= package[fn::http
 
 * Chapter 1
 
-** 1.1
+** 1.01
 
 #+begin_quote
 Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
@@ -105,7 +107,7 @@ The interpreter's expected results are in the comments under each expression.
 ;; 16
 #+end_src
 
-** 1.2
+** 1.02
 
 #+begin_quote
 Translate the following expression into prefix form.
@@ -124,7 +126,7 @@ Translate the following expression into prefix form.
 #+RESULTS:
 : -37/150
 
-** 1.3
+** 1.03
 
 #+begin_quote
 Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
@@ -154,7 +156,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
 #+RESULTS:
 : 25
 
-** 1.4
+** 1.04
 
 #+begin_quote
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
@@ -167,7 +169,7 @@ Observe that our model of evaluation allows for combinations whose operators are
 
 The operator to be used depends on the evaluation of the =if= statement.
 
-** 1.5
+** 1.05
 
 #+begin_quote
 Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation.  He defines the following two procedures:
@@ -190,3 +192,20 @@ Then he evaluates the expression
 What behavior will Ben observe with an interpreter that uses applicative-order evaluation?  What behavior will he observe with an interpreter that uses normal-order evaluation?  Explain your answer.  (Assume that the evaluation rule for the special form `if' is the same whether the interpreter is using normal or applicative order: The predicate expression is evaluated first, and the result determines whether to evaluate the consequent or the alternative expression.)
 #+end_quote
 
+The two cases are examined below:
+
+- Applicative-Order evaluation
+
+  The interpreter will /"evaluate the arguments and then apply"/, so it will first evaluate 0, then it will try to evaluate =(p)= which will result in an infinite loop. That is because in src_racket[:exports code]{(define (p) (p))} =(p)='s definition is itself.
+
+- Normal-Order evaluation
+
+  The interpreter will transform src_racket[:exports code]{(test 0 (p))} to
+
+  #+begin_src racket
+(if (= 0 0)
+      0
+      (p))
+  #+end_src
+
+  and then will evaluate the expression. Since src_racket[:exports code]{(= 0 0)} evaluates to src_racket[:exports code]{#t}, =(p)= will never be evaluated because it is not needed.
