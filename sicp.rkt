@@ -1,4 +1,4 @@
-;; [[file:sicp.org::*1.1][1.1:1]]
+;; [[file:sicp.org::*1.01][1.01:1]]
 #lang sicp
 
 (write (let ()
@@ -36,16 +36,16 @@
          (else -1))
    (+ a 1))
 ;; 16))
-;; 1.1:1 ends here
+;; 1.01:1 ends here
 
-;; [[file:sicp.org::*1.2][1.2:1]]
+;; [[file:sicp.org::*1.02][1.02:1]]
 #lang sicp
 
 (write (let ()
 
 (/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
    (* 3 (- 6 2) (- 2 7)))))
-;; 1.2:1 ends here
+;; 1.02:1 ends here
 
 ;; [[file:sicp.org::larger-squares][larger-squares]]
 #lang sicp
@@ -61,20 +61,11 @@
          (+ (* b b) (* c c)))))))
 ;; larger-squares ends here
 
-;; [[file:sicp.org::*1.3][1.3:2]]
+;; [[file:sicp.org::*1.03][1.03:2]]
 #lang sicp
 
 (write (let ()
 
 <<larger-squares>>
 (proc 4 2 3)))
-;; 1.3:2 ends here
-
-;; [[file:sicp.org::*1.4][1.4:1]]
-#lang sicp
-
-(write (let ()
-
-(define (a-plus-abs-b a b)
-  ((if (> b 0) + -) a b))))
-;; 1.4:1 ends here
+;; 1.03:2 ends here

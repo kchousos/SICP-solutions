@@ -161,7 +161,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
 #+begin_quote
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
 
-#+begin_src racket
+#+begin_src racket :tangle no
 (define (a-plus-abs-b a b)
   ((if (> b 0) + -) a b))
 #+end_src
@@ -174,7 +174,7 @@ The operator to be used depends on the evaluation of the =if= statement.
 #+begin_quote
 Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation.  He defines the following two procedures:
 
-#+begin_src racket
+#+begin_src racket :tangle no
 (define (p) (p))
 
 (define (test x y)
@@ -185,7 +185,7 @@ Ben Bitdiddle has invented a test to determine whether the interpreter he is fac
 
 Then he evaluates the expression
 
-#+begin_src racket
+#+begin_src racket :tangle no
 (test 0 (p))
 #+end_src
 
@@ -202,7 +202,7 @@ The two cases are examined below:
 
   The interpreter will transform src_racket[:exports code]{(test 0 (p))} to
 
-  #+begin_src racket
+  #+begin_src racket :tangle no
 (if (= 0 0)
       0
       (p))
