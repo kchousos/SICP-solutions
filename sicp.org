@@ -19,6 +19,9 @@
 #+LATEX_HEADER: \setmainfont{Linux Libertine}
 #+LATEX_HEADER: \setmonofont{Iosevka}
 
+#+LATEX_HEADER: \usepackage{unicode-math}
+#+LATEX_HEADER: \setmathfont{Libertinus Math}
+
 #+LATEX_HEADER: \usepackage{microtype}
 
 #+LATEX_HEADER: \usepackage{svg}

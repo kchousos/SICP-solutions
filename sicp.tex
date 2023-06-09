@@ -14,6 +14,8 @@
 \usepackage{fontspec}
 \setmainfont{Linux Libertine}
 \setmonofont{Iosevka}
+\usepackage{unicode-math}
+\setmathfont{Libertinus Math}
 \usepackage{microtype}
 \usepackage{svg}
 \usepackage[margin=1.3in]{geometry}
@@ -58,7 +60,7 @@ urlcolor=blue}\begin{document}
 \maketitle
 
 \section*{Introduction}
-\label{sec:org4098251}
+\label{sec:orgce2c49d}
 
 This document contains my solutions to the exercises of the \emph{Abelson, Sussman \& Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press} book. It will be updated to reflect my current progress. Each subsection consists of an exercise. The exercise is copied over from the book and presented in italics, followed by my (hopefully correct) solution.
 
@@ -71,10 +73,10 @@ Racket is used for implementing the exercises, using the \texttt{sicp} package\f
 \newpage
 
 \section*{Chapter 1}
-\label{sec:org1962e20}
+\label{sec:org70fdfd2}
 
 \subsection*{1.01}
-\label{sec:org040de82}
+\label{sec:orgbd64663}
 
 \begin{quote}
 Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
@@ -119,7 +121,7 @@ The interpreter's expected results are in the comments under each expression.
 \end{minted}
 
 \subsection*{1.02}
-\label{sec:org27b456e}
+\label{sec:orgc565248}
 
 \begin{quote}
 Translate the following expression into prefix form.
@@ -140,7 +142,7 @@ Translate the following expression into prefix form.
 \end{verbatim}
 
 \subsection*{1.03}
-\label{sec:orgb61256e}
+\label{sec:org26dddda}
 
 \begin{quote}
 Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
@@ -158,7 +160,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
         ((and (> b a) (> c a))
          (+ (* b b) (* c c)))))
 \end{minted}
-\caption{\label{lst:org7a66e28}Sum of the two-out-of-three larger numbers}
+\caption{\label{lst:org6358acf}Sum of the two-out-of-three larger numbers}
 \end{listing}
 
 \begin{listing}[H]
@@ -174,7 +176,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
 \end{verbatim}
 
 \subsection*{1.04}
-\label{sec:org0e5c146}
+\label{sec:org70e5ac6}
 
 \begin{quote}
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
@@ -188,7 +190,7 @@ Observe that our model of evaluation allows for combinations whose operators are
 The operator to be used depends on the evaluation of the \texttt{if} statement.
 
 \subsection*{1.05}
-\label{sec:org7025c05}
+\label{sec:orgd34b9c8}
 
 \begin{quote}
 Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation.  He defines the following two procedures:
