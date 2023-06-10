@@ -3,7 +3,7 @@
 #+author: Konstantinos Chousos
 #+language: en
 #+options: num:nil toc:nil date:t timestamp:nil # tex:dvisvgm
-#+property: header-args :lang sicp :eval no-export :exports both :tangle ./sicp.rkt :comments link
+#+property: header-args:racket :lang sicp :eval no-export :exports both :tangle ./sicp.rkt :comments link
 :LATEX_PROPERTIES:
 #+LATEX_COMPILER: lualatex
 #+LATEX_CLASS: article
