@@ -2,7 +2,7 @@
 #+subtitle: Exercise solutions
 #+author: Konstantinos Chousos
 #+language: en
-#+options: num:nil toc:nil date:t timestamp:nil # tex:dvisvgm
+#+options: num:nil toc:nil date:t timestamp:nil todo:t
 #+property: header-args:racket :lang sicp :eval no-export :exports both :tangle ./sicp.rkt :comments link
 :LATEX_PROPERTIES:
 #+LATEX_COMPILER: lualatex
@@ -249,8 +249,47 @@ square roots? Explain.
 
 Since =new-if= is user-defined, all parameters will be evaluated before it is applied. Therefore, src_racket[:exports code]{(sqrt-iter (improve guess x) x)} will always be evaluated, and since it calls itself it will run indefinitely.
 
-** 1.7
+** TODO 1.7
 
 #+begin_quote
 The =good-enough?= test used in computing square roots will not be very effective for finding the square roots of very small numbers.  Also, in real computers, arithmetic operations are almost always performed with limited precision.  This makes our test inadequate for very large numbers.  Explain these statements, with examples showing how the test fails for small and large numbers.  An alternative strategy for implementing =good-enough?= is to watch how =guess= changes from one iteration to the next and to stop when the change is a very small fraction of the guess.  Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers?
 #+end_quote
+
+** 1.8
+
+#+begin_quote
+Newton's method for cube roots is based on the fact that if $y$ is an approximation to the cube root of $x$, then a better approximation is given by the value
+
+\begin{equation}
+    \frac{x/y^2 + 2y}{3}
+\end{equation}
+
+Use this formula to implement a cube-root procedure analogous to the square-root procedure. (In section 1-3-4 we will see how to implement Newton's method in general as an abstraction of these square-root and cube-root procedures).
+#+end_quote
+
+#+name: cube-root
+#+begin_src racket
+(define (cube x) (* x x x))
+
+(define (good-enough? guess x)
+  (< (abs (- (cube guess) x)) 0.0000001))
+
+(define (improve guess x)
+  (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))
+
+(define (cube-root-iter guess x)
+  (if (good-enough? guess x)
+      guess
+      (cube-root-iter (improve guess x) x)))
+
+(define (cube-root x)
+  (cube-root-iter 1.0 x))
+#+end_src
+
+#+begin_src racket :noweb eval
+<<cube-root>>
+(cube-root 27)
+#+end_src
+
+#+RESULTS:
+: 3.0000000000000977

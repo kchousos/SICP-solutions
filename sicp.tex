@@ -60,7 +60,7 @@ urlcolor=blue}\begin{document}
 \maketitle
 
 \section*{Introduction}
-\label{sec:orgf7eac53}
+\label{sec:org1a19912}
 
 This document contains my solutions to the exercises of the \emph{Abelson, Sussman \& Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press} book. It will be updated to reflect my current progress. Each subsection consists of an exercise. The exercise is copied over from the book and presented in italics, followed by my (hopefully correct) solution.
 
@@ -73,10 +73,10 @@ Racket is used for implementing the exercises, using the \texttt{sicp} package\f
 \newpage
 
 \section*{Chapter 1}
-\label{sec:org5c1747a}
+\label{sec:org7094ad3}
 
 \subsection*{1.1}
-\label{sec:org0bead69}
+\label{sec:org0965c86}
 
 \begin{quote}
 Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
@@ -121,7 +121,7 @@ The interpreter's expected results are in the comments under each expression.
 \end{minted}
 
 \subsection*{1.2}
-\label{sec:orgfa9a1e0}
+\label{sec:orga911e64}
 
 \begin{quote}
 Translate the following expression into prefix form.
@@ -142,7 +142,7 @@ Translate the following expression into prefix form.
 \end{verbatim}
 
 \subsection*{1.3}
-\label{sec:org5fe782d}
+\label{sec:org2df494f}
 
 \begin{quote}
 Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
@@ -160,7 +160,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
         ((and (> b a) (> c a))
          (+ (* b b) (* c c)))))
 \end{minted}
-\caption{\label{lst:org6fa51c8}Sum of the two-out-of-three larger numbers}
+\caption{\label{lst:orgdccc0fc}Sum of the two-out-of-three larger numbers}
 \end{listing}
 
 \begin{listing}[H]
@@ -176,7 +176,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
 \end{verbatim}
 
 \subsection*{1.4}
-\label{sec:org36865bc}
+\label{sec:orgccc8909}
 
 \begin{quote}
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
@@ -190,7 +190,7 @@ Observe that our model of evaluation allows for combinations whose operators are
 The operator to be used depends on the evaluation of the \texttt{if} statement.
 
 \subsection*{1.5}
-\label{sec:org9417c2e}
+\label{sec:orgdcf3ac3}
 
 \begin{quote}
 Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation.  He defines the following two procedures:
@@ -234,7 +234,7 @@ and then will evaluate the expression. Since \mintinline{racket}{(= 0 0)} evalua
 \end{itemize}
 
 \subsection*{1.6}
-\label{sec:orgeef5e7a}
+\label{sec:orgb19b172}
 
 \begin{quote}
 Alyssa P. Hacker doesn't see why if needs to be provided as a special form. “Why can't I just define it as an ordinary procedure in terms of \texttt{cond}?” she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of if:
@@ -270,10 +270,50 @@ square roots? Explain.
 
 Since \texttt{new-if} is user-defined, all parameters will be evaluated before it is applied. Therefore, \mintinline{racket}{(sqrt-iter (improve guess x) x)} will always be evaluated, and since it calls itself it will run indefinitely.
 
-\subsection*{1.7}
-\label{sec:orgfa452e7}
+\subsection*{{\bfseries\sffamily TODO} 1.7}
+\label{sec:orged19a36}
 
 \begin{quote}
 The \texttt{good-enough?} test used in computing square roots will not be very effective for finding the square roots of very small numbers.  Also, in real computers, arithmetic operations are almost always performed with limited precision.  This makes our test inadequate for very large numbers.  Explain these statements, with examples showing how the test fails for small and large numbers.  An alternative strategy for implementing \texttt{good-enough?} is to watch how \texttt{guess} changes from one iteration to the next and to stop when the change is a very small fraction of the guess.  Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers?
 \end{quote}
+
+\subsection*{1.8}
+\label{sec:orge70c293}
+
+\begin{quote}
+Newton's method for cube roots is based on the fact that if \(y\) is an approximation to the cube root of \(x\), then a better approximation is given by the value
+
+\begin{equation}
+    \frac{x/y^2 + 2y}{3}
+\end{equation}
+
+Use this formula to implement a cube-root procedure analogous to the square-root procedure. (In section 1-3-4 we will see how to implement Newton's method in general as an abstraction of these square-root and cube-root procedures).
+\end{quote}
+
+\begin{minted}[]{racket}
+(define (cube x) (* x x x))
+
+(define (good-enough? guess x)
+  (< (abs (- (cube guess) x)) 0.0000001))
+
+(define (improve guess x)
+  (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))
+
+(define (cube-root-iter guess x)
+  (if (good-enough? guess x)
+      guess
+      (cube-root-iter (improve guess x) x)))
+
+(define (cube-root x)
+  (cube-root-iter 1.0 x))
+\end{minted}
+
+\begin{minted}[]{racket}
+<<cube-root>>
+(cube-root 27)
+\end{minted}
+
+\begin{verbatim}
+3.0000000000000977
+\end{verbatim}
 \end{document}
