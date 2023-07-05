@@ -60,7 +60,7 @@ urlcolor=blue}\begin{document}
 \maketitle
 
 \section*{Introduction}
-\label{sec:orgce2c49d}
+\label{sec:orgf7eac53}
 
 This document contains my solutions to the exercises of the \emph{Abelson, Sussman \& Sussman (2002) Structure and Interpretation of Computer Programs, MIT Press} book. It will be updated to reflect my current progress. Each subsection consists of an exercise. The exercise is copied over from the book and presented in italics, followed by my (hopefully correct) solution.
 
@@ -73,10 +73,10 @@ Racket is used for implementing the exercises, using the \texttt{sicp} package\f
 \newpage
 
 \section*{Chapter 1}
-\label{sec:org70fdfd2}
+\label{sec:org5c1747a}
 
-\subsection*{1.01}
-\label{sec:orgbd64663}
+\subsection*{1.1}
+\label{sec:org0bead69}
 
 \begin{quote}
 Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.
@@ -120,8 +120,8 @@ The interpreter's expected results are in the comments under each expression.
 ;; 16
 \end{minted}
 
-\subsection*{1.02}
-\label{sec:orgc565248}
+\subsection*{1.2}
+\label{sec:orgfa9a1e0}
 
 \begin{quote}
 Translate the following expression into prefix form.
@@ -141,8 +141,8 @@ Translate the following expression into prefix form.
 -37/150
 \end{verbatim}
 
-\subsection*{1.03}
-\label{sec:org26dddda}
+\subsection*{1.3}
+\label{sec:org5fe782d}
 
 \begin{quote}
 Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.
@@ -160,7 +160,7 @@ Instead of searching for the two larger numbers, we just find the smallest. This
         ((and (> b a) (> c a))
          (+ (* b b) (* c c)))))
 \end{minted}
-\caption{\label{lst:org6358acf}Sum of the two-out-of-three larger numbers}
+\caption{\label{lst:org6fa51c8}Sum of the two-out-of-three larger numbers}
 \end{listing}
 
 \begin{listing}[H]
@@ -175,8 +175,8 @@ Instead of searching for the two larger numbers, we just find the smallest. This
 25
 \end{verbatim}
 
-\subsection*{1.04}
-\label{sec:org70e5ac6}
+\subsection*{1.4}
+\label{sec:org36865bc}
 
 \begin{quote}
 Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:
@@ -189,8 +189,8 @@ Observe that our model of evaluation allows for combinations whose operators are
 
 The operator to be used depends on the evaluation of the \texttt{if} statement.
 
-\subsection*{1.05}
-\label{sec:orgd34b9c8}
+\subsection*{1.5}
+\label{sec:org9417c2e}
 
 \begin{quote}
 Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation.  He defines the following two procedures:
@@ -232,4 +232,48 @@ The interpreter will transform \mintinline{racket}{(test 0 (p))} to
 
 and then will evaluate the expression. Since \mintinline{racket}{(= 0 0)} evaluates to \mintinline{racket}{#t}, \texttt{(p)} will never be evaluated because it is not needed.
 \end{itemize}
+
+\subsection*{1.6}
+\label{sec:orgeef5e7a}
+
+\begin{quote}
+Alyssa P. Hacker doesn't see why if needs to be provided as a special form. “Why can't I just define it as an ordinary procedure in terms of \texttt{cond}?” she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of if:
+
+\begin{minted}[]{racket}
+(define (new-if predicate then-clause else-clause)
+  (cond (predicate then-clause)
+        (else else-clause)))
+\end{minted}
+
+Eva demonstrates the program for Alyssa:
+
+\begin{minted}[]{racket}
+(new-if (= 2 3) 0 5)
+5
+(new-if (= 1 1) 0 5)
+0
+\end{minted}
+
+Delighted, Alyssa uses new-if to rewrite the square-root
+program:
+
+\begin{minted}[]{racket}
+(define (sqrt-iter guess x)
+  (new-if (good-enough? guess x)
+          guess
+          (sqrt-iter (improve guess x) x)))
+\end{minted}
+
+What happens when Alyssa attempts to use this to compute
+square roots? Explain.
+\end{quote}
+
+Since \texttt{new-if} is user-defined, all parameters will be evaluated before it is applied. Therefore, \mintinline{racket}{(sqrt-iter (improve guess x) x)} will always be evaluated, and since it calls itself it will run indefinitely.
+
+\subsection*{1.7}
+\label{sec:orgfa452e7}
+
+\begin{quote}
+The \texttt{good-enough?} test used in computing square roots will not be very effective for finding the square roots of very small numbers.  Also, in real computers, arithmetic operations are almost always performed with limited precision.  This makes our test inadequate for very large numbers.  Explain these statements, with examples showing how the test fails for small and large numbers.  An alternative strategy for implementing \texttt{good-enough?} is to watch how \texttt{guess} changes from one iteration to the next and to stop when the change is a very small fraction of the guess.  Design a square-root procedure that uses this kind of end test. Does this work better for small and large numbers?
+\end{quote}
 \end{document}
